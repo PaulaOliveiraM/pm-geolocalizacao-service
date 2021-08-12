@@ -9,7 +9,6 @@ export class GeolocalizacaoProviderFactory {
             return this.geolocalizacaoProvider;
         }
 
-        //TODO: Criar uma env onde seja possível indicar qual o provedor de geolocalização que deverá ser utilizado no momento.
         this.geolocalizacaoProvider = new GoogleMapsProvider();
         return this.geolocalizacaoProvider;
     }
