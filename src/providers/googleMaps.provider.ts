@@ -2,7 +2,6 @@ import { Localizacao } from "../api/components/localizacao/localizacao.model";
 import { IGeolocalizacaoProvider } from "./geolocalizacaoProvider.interface";
 
 export class GoogleMapsProvider implements IGeolocalizacaoProvider{
-    //TODO: Fazer a implementação da busca pelo GoogleMaps depois buscar outro serviço que faça a mesma coisa e implementar
     consultarPorEndereco(endereco: string): Localizacao[] {
        return [{
             cep: 21862005,
