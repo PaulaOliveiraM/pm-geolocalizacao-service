@@ -20,7 +20,7 @@ export class LocalizacaoController {
 	public async localizarPorEndereco(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		try {
 			const endereco = req.params.endereco;
-			const enderecosEncontrados = this.localizacaoService.localizarPorEnderecoOuCEP(endereco);
+			const enderecosEncontrados = await this.localizacaoService.localizarPorEnderecoOuCEP(endereco);
 			
 			return res.json(enderecosEncontrados);
 		} catch (err) {
@@ -40,7 +40,7 @@ export class LocalizacaoController {
 		try {
 			const latitude = req.params.latitude;
 			const longitude = req.params.longitude
-			const enderecosLocalizados = this.localizacaoService.localizarPorCoordenadas(parseFloat(latitude),longitude)
+			const enderecosLocalizados = await this.localizacaoService.localizarPorCoordenadas(parseFloat(latitude),longitude)
 			return res.json(enderecosLocalizados);
 		} catch (err) {
 			return next(err);

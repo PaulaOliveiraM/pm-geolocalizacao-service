@@ -1,5 +1,5 @@
 import { IGeolocalizacaoProvider } from "./geolocalizacaoProvider.interface";
-import { GoogleMapsProvider } from "./GoogleMaps.provider";
+import { PositionStackProvider } from "./positionStackProvider.provider";
 
 export class GeolocalizacaoProviderFactory {
     private static geolocalizacaoProvider: IGeolocalizacaoProvider;
@@ -9,7 +9,7 @@ export class GeolocalizacaoProviderFactory {
             return this.geolocalizacaoProvider;
         }
 
-        this.geolocalizacaoProvider = new GoogleMapsProvider();
+        this.geolocalizacaoProvider = new PositionStackProvider();
         return this.geolocalizacaoProvider;
     }
 }

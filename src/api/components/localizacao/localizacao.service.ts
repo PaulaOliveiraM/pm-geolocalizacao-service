@@ -2,8 +2,8 @@ import { IGeolocalizacaoProvider } from "../../../providers/geolocalizacaoProvid
 import { Localizacao } from "./localizacao.model";
 
 export interface ILocalizacaoService{
-    localizarPorEnderecoOuCEP(endereco: string):Localizacao[];
-    localizarPorCoordenadas(latitude: number, longitude) :Localizacao[];
+    localizarPorEnderecoOuCEP(endereco: string):Promise<Localizacao[]>;
+    localizarPorCoordenadas(latitude: number, longitude) :Promise<Localizacao[]>;
 
 } 
 
@@ -14,12 +14,12 @@ export class LocalizacaoService implements ILocalizacaoService{
         this.geolocalizacaoProvider = geolocalizacaoProvider;
     }
 
-    localizarPorEnderecoOuCEP(endereco: string, cep: number = undefined):Localizacao[]{
-        return this.geolocalizacaoProvider.consultarPorEndereco(endereco);
+    async localizarPorEnderecoOuCEP(endereco: string, cep: number = undefined):Promise<Localizacao[]>{
+        return await this.geolocalizacaoProvider.consultarPorEndereco(endereco);
     }
 
-    localizarPorCoordenadas(latitude: number, longitude) :Localizacao[]{
-        return this.geolocalizacaoProvider.consultarPorCoordernadas(latitude, longitude);
+    async localizarPorCoordenadas(latitude: number, longitude) :Promise<Localizacao[]>{
+        return await this.geolocalizacaoProvider.consultarPorCoordernadas(latitude, longitude);
     }
 
 
