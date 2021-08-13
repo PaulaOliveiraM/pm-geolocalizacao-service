@@ -25,6 +25,8 @@ interface IPositionStackPlace {
 }
 
 export class PositionStackProvider implements IGeolocalizacaoProvider {
+  public static readonly  PROVIDER_NAME:string = "PositionStack";
+
   async consultarPorEndereco(endereco: string): Promise<Localizacao[]> {
     const url =  `${env.POSITION_STACK_FORWARD_URL}?access_key=${env.POSITION_STACK_ACCESS_KEY}&query=${endereco}`;
     const response = await axios.get(url);
@@ -55,7 +57,8 @@ export class PositionStackProvider implements IGeolocalizacaoProvider {
         estado: endereco.region_code,
         latitude: endereco.latitude,
         longitude: endereco.longitude,
-        pais: endereco.country
+        pais: endereco.country,
+        provider: PositionStackProvider.PROVIDER_NAME
       });
     }
 
