@@ -1,6 +1,7 @@
 import express from 'express';
 import { Server } from './api/server';
 import { createServer, Server as HttpServer } from 'http';
+import { env } from './config/globals';
 
 (async function main() {
 	try {
@@ -10,7 +11,7 @@ import { createServer, Server as HttpServer } from 'http';
 		const server: HttpServer = createServer(app);
 
 		// Start express server
-		server.listen(3000);
+		server.listen(env.NODE_PORT);
 
 		server.on('listening', () => {
 			console.log(`node server is listening on port 3000 in development mode`);
@@ -24,6 +25,3 @@ import { createServer, Server as HttpServer } from 'http';
 	}
 })();
 
-//TODO:  1- Implementar o provider de Geolocalizacao do Google e outro a definir
-//TODO:  2- Implementar os testes unitários das camadas: controller, provider e service
-//TODO:  3- Implementar o teste integrado das camadas: controller, service e provider

@@ -43,12 +43,12 @@ interface ILocationIQProviderPlace {
   
 }
 
-export class LocationIQProvider implements IGeolocalizacaoProvider {
+export default class LocationIQProvider implements IGeolocalizacaoProvider {
   public  static readonly  PROVIDER_NAME:string = "LocationIQ";
+
   async consultarPorEndereco(endereco: string): Promise<Localizacao[]> {
     const url =  `${env.LOCATION_IQ_URL}?key=${env.LOCATION_IQ_ACESS_KEY}&q=${endereco}&format=json&addressdetails=1`;
     const response = await axios.get(url);
-    console.log(response.data[0].address)
     const localizacoes = this.mapearListaLocalizacao(response.data);
 
     return localizacoes;

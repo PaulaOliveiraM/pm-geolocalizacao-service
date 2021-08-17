@@ -5,4 +5,5 @@ export const env = {
     LOCATION_IQ_ACESS_KEY: process.env.LOCATION_IQ_ACESS_KEY,
     LOCATION_IQ_URL: process.env.LOCATION_IQ_URL,
     USE_PROVIDER_LOCATION: process.env.USE_PROVIDER_LOCATION,
+    NODE_PORT: process.env.NODE_PORT
 }

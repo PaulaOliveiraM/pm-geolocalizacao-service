@@ -24,7 +24,7 @@ interface IPositionStackPlace {
   label: string;
 }
 
-export class PositionStackProvider implements IGeolocalizacaoProvider {
+export default class PositionStackProvider implements IGeolocalizacaoProvider {
   public static readonly  PROVIDER_NAME:string = "PositionStack";
 
   async consultarPorEndereco(endereco: string): Promise<Localizacao[]> {

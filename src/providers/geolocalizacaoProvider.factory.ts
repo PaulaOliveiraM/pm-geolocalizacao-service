@@ -1,8 +1,8 @@
 import { response } from "express";
 import { env } from "../config/globals";
 import { IGeolocalizacaoProvider } from "./geolocalizacaoProvider.interface";
-import { LocationIQProvider } from "./locationIQ.provider";
-import { PositionStackProvider } from "./positionStack.provider";
+import  LocationIQProvider  from "./locationIQ.provider";
+import  PositionStackProvider  from "./positionStack.provider";
 
 export class GeolocalizacaoProviderFactory {
   private static geolocalizacaoProvider: IGeolocalizacaoProvider;
@@ -18,7 +18,6 @@ export class GeolocalizacaoProviderFactory {
 
   private static selecionarProvider(): IGeolocalizacaoProvider {
     const useProviderLocation = env.USE_PROVIDER_LOCATION;
-    
     if (useProviderLocation == PositionStackProvider.PROVIDER_NAME) {
       return new PositionStackProvider();
     } else if (useProviderLocation == LocationIQProvider.PROVIDER_NAME) {
