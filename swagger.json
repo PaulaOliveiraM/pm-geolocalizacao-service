@@ -1,0 +1,113 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Serviço de Geolocalização",
+    "description": "API de consulta dados de Geolocalização com swagger",
+    "version": "1.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "paths": {
+    "/api/v1/localizacao/{endereco}": {
+      "get": {
+        "description": "Consulte os dados de um dado endereço",
+        "operationId": "localizarEndereco",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "endereco",
+            "in": "path",
+            "description": "Endereço a ser localizado",
+            "type":"string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A listagem de todos os endereços que foram localizados",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Localizacao" }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "500": {
+            "description": "Error: Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/v1/localizacao/{latitude}/{longitude}": {
+      "get": {
+        "description": "Consulte a localizacao de um endereco a partir da latitude e longitude",
+        "operationId": "localizarCoordenadas",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "latitude",
+            "in": "path",
+            "description": "Latitude do endereço a ser localizado",
+            "required": true,
+            "type":"number"
+          },
+          {
+            "name": "longitude",
+            "in": "path",
+            "description": "Longitude do endereço a ser localizado",
+            "required": true,
+            "type":"number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A listagem de todos os endereços que foram localizados",
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Localizacao" }
+            }
+          },
+          "400": {
+            "description": "Error"
+          },
+          "500": {
+            "description": "Error: Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Localizacao": {
+      "type": "object",
+      "properties": {
+        "endereco": {
+          "type": "string"
+        },
+        "cidade": {
+          "type": "string"
+        },
+        "estado": {
+          "type": "string"
+        },
+        "latitude": {
+          "type": "number"
+        },
+        "longitude": {
+          "type": "number"
+        },
+        "cep": {
+          "type": "string"
+        },
+        "pais": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

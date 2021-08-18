@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { ILocalizacaoService, LocalizacaoService } from './localizacao.service';
+import { ILocalizacaoService } from './localizacao.service';
+import RemoveAccents from 'remove-accents';
 
 
 export class LocalizacaoController {
@@ -9,17 +10,10 @@ export class LocalizacaoController {
 		this.localizacaoService = localizacaoService;
 	}
 
-	/**
-	 * Read location by address
-	 *
-	 * @param req Express request
-	 * @param res Express response
-	 * @param next Express next
-	 * @returns HTTP response
-	 */
+
 	public async localizarPorEndereco(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		try {
-			const endereco = req.params.endereco;
+			const endereco = RemoveAccents(req.params.endereco);
 			const enderecosEncontrados = await this.localizacaoService.localizarPorEnderecoOuCEP(endereco);
 			
 			return res.json(enderecosEncontrados);
@@ -28,14 +22,7 @@ export class LocalizacaoController {
 		}
 	}
 
-	/**
-	 * Read location by coordinates
-	 *
-	 * @param req Express request
-	 * @param res Express response
-	 * @param next Express next
-	 * @returns HTTP response
-	 */
+	
 	 async localizarPorCoordenadas(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
 		try {
 			const latitude = req.params.latitude;

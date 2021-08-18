@@ -8,7 +8,9 @@ import { env } from './config/globals';
 
 		// Init express server
 		const app: express.Application = new Server().app;
+		
 		const server: HttpServer = createServer(app);
+
 
 		// Start express server
 		server.listen(env.NODE_PORT);
