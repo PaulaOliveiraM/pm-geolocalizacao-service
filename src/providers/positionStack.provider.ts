@@ -2,6 +2,7 @@ import { Localizacao } from "../api/components/localizacao/localizacao.model";
 import { env } from "../config/globals";
 import { IGeolocalizacaoProvider } from "./geolocalizacaoProvider.interface";
 import axios from "axios";
+import { DomainError, DomainErrorCode } from "../api/components/helper";
 
 interface IPositionStackPlace {
   latitude: number;
@@ -25,28 +26,50 @@ interface IPositionStackPlace {
 }
 
 export default class PositionStackProvider implements IGeolocalizacaoProvider {
-  public static readonly  PROVIDER_NAME:string = "PositionStack";
+  public static readonly PROVIDER_NAME: string = "PositionStack";
 
   async consultarPorEndereco(endereco: string): Promise<Localizacao[]> {
-    const url =  `${env.POSITION_STACK_FORWARD_URL}?access_key=${env.POSITION_STACK_ACCESS_KEY}&query=${endereco}`;
-    const response = await axios.get(url);
-    const localizacoes = this.mapearListaLocalizacao(response.data.data);
+    const url = `${env.POSITION_STACK_FORWARD_URL}?access_key=${env.POSITION_STACK_ACCESS_KEY}&query=${endereco}`;
 
-    return localizacoes;
+    try {
+      const response = await axios.get(url);
+      const localizacoes = this.mapearListaLocalizacao(response.data.data);
+      return localizacoes;
+    } catch (error) {
+      if (error.response.status === 404) {
+        throw new DomainError(
+          DomainErrorCode.EnderecoNaoLocalizado,
+          "Endereço não localizado"
+        );
+      }
+      throw error;
+    }
   }
 
   async consultarPorCoordernadas(
     latitude: number,
     longitude: number
   ): Promise<Localizacao[]> {
-    const url = `${env.POSITION_STACK_REVERSE_URL}?access_key=${env.POSITION_STACK_ACCESS_KEY}&query=${latitude},${longitude}`
-    const response = await axios.get(url);
-    const localizacoes = this.mapearListaLocalizacao(response.data.data);
+    const url = `${env.POSITION_STACK_REVERSE_URL}?access_key=${env.POSITION_STACK_ACCESS_KEY}&query=${latitude},${longitude}`;
 
-    return localizacoes;
+    try {
+      const response = await axios.get(url);
+      const localizacoes = this.mapearListaLocalizacao(response.data.data);
+      return localizacoes;
+    } catch (error) {
+      if (error.response.status === 404) {
+        throw new DomainError(
+          DomainErrorCode.EnderecoNaoLocalizado,
+          "Endereço não localizado"
+        );
+      }
+      throw error;
+    }
   }
 
-  private mapearListaLocalizacao(enderecos: IPositionStackPlace[]): Localizacao[] {
+  private mapearListaLocalizacao(
+    enderecos: IPositionStackPlace[]
+  ): Localizacao[] {
     const listaLocalizacoes: Localizacao[] = new Array();
 
     for (const endereco of enderecos) {
@@ -58,7 +81,7 @@ export default class PositionStackProvider implements IGeolocalizacaoProvider {
         latitude: endereco.latitude,
         longitude: endereco.longitude,
         pais: endereco.country,
-        provider: PositionStackProvider.PROVIDER_NAME
+        provider: PositionStackProvider.PROVIDER_NAME,
       });
     }
 

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { ILocalizacaoService } from './localizacao.service';
 import RemoveAccents from 'remove-accents';
+import { DomainError, DomainErrorCode } from '../helper';
 
 
 export class LocalizacaoController {
@@ -18,6 +19,10 @@ export class LocalizacaoController {
 			
 			return res.json(enderecosEncontrados);
 		} catch (err) {
+			if (err instanceof DomainError && err.Code == DomainErrorCode.EnderecoNaoLocalizado){
+				res.status(404);
+				return res.send(err.Message);
+			}
 			return next(err);
 		}
 	}
@@ -27,9 +32,14 @@ export class LocalizacaoController {
 		try {
 			const latitude = req.params.latitude;
 			const longitude = req.params.longitude
-			const enderecosLocalizados = await this.localizacaoService.localizarPorCoordenadas(parseFloat(latitude),longitude)
+			const enderecosLocalizados = await this.localizacaoService.localizarPorCoordenadas(parseFloat(latitude),parseFloat(longitude))
 			return res.json(enderecosLocalizados);
 		} catch (err) {
+			if (err instanceof DomainError && err.Code == DomainErrorCode.EnderecoNaoLocalizado){
+				res.status(404);
+				return res.send(err.Message);
+			}
+			
 			return next(err);
 		}
 	}

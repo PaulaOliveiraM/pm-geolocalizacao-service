@@ -2,7 +2,7 @@ import { Router } from "express";
 import { IComponentRoutes } from "../helper";
 import { LocalizacaoController } from "./localizacao.controller";
 import { LocalizacaoFactory } from "./localizacao.factory";
-import { ILocalizacaoService, LocalizacaoService } from "./localizacao.service";
+import { ILocalizacaoService } from "./localizacao.service";
 
 export class LocalizadorRoutes implements IComponentRoutes<LocalizacaoController> {
     localizacaoService :ILocalizacaoService= LocalizacaoFactory.makeLocalizacaoService();

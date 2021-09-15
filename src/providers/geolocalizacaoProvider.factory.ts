@@ -1,8 +1,8 @@
 import { response } from "express";
 import { env } from "../config/globals";
 import { IGeolocalizacaoProvider } from "./geolocalizacaoProvider.interface";
-import  LocationIQProvider  from "./locationIQ.provider";
-import  PositionStackProvider  from "./positionStack.provider";
+import LocationIQProvider from "./locationIQ.provider";
+import PositionStackProvider from "./positionStack.provider";
 
 export class GeolocalizacaoProviderFactory {
   private static geolocalizacaoProvider: IGeolocalizacaoProvider;

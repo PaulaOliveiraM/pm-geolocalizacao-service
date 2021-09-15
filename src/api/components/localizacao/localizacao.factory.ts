@@ -5,6 +5,7 @@ import { ILocalizacaoService, LocalizacaoService } from "./localizacao.service";
 
 export class LocalizacaoFactory {
     private static localizacaoService: ILocalizacaoService;
+    
     public static makeLocalizacaoService():ILocalizacaoService{
         if (this.localizacaoService){
             return this.localizacaoService;

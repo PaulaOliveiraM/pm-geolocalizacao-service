@@ -22,7 +22,7 @@ export class LocalizacaoService implements ILocalizacaoService {
 
   async localizarPorCoordenadas(
     latitude: number,
-    longitude
+    longitude: number
   ): Promise<Localizacao[]> {
     return await this.geolocalizacaoProvider.consultarPorCoordernadas(
       latitude,
