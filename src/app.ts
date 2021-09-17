@@ -13,7 +13,7 @@ import { env } from './config/globals';
 
 
 		// Start express server
-		server.listen(env.NODE_PORT);
+		server.listen(env.NODE_PORT_GEOLOCALIZACAO_SERVICE);
 
 		server.on('listening', () => {
 			console.log(`node server is listening on port 3000 in development mode`);
